@@ -1,0 +1,2 @@
+py_script_exec
+tests
