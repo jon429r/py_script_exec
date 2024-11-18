@@ -7,9 +7,10 @@ import shutil
 def py_run(script_name: str, args: Optional[List[str]] = None) -> Tuple[int, str, str]:
     """
     Runs a Python script with the specified arguments, cross-platform.
+    Assumes python python is in the PATH.
 
     Args:
-        script_name (str): The name or path of the Python script to run.
+        script_name (str): The name or path of the Python script to run doesn't need to include .py.
         args (Optional[List[str]]): A list of arguments to pass to the script.
 
     Returns:
@@ -18,12 +19,22 @@ def py_run(script_name: str, args: Optional[List[str]] = None) -> Tuple[int, str
             - The standard output of the script.
             - The standard error of the script.
     """
+    if script_name == "":
+        raise ValueError("Script name cannot be None.")
+
+    # make sure file exenstion is .py
+    if not script_name.endswith(".py") and "." in script_name:
+        raise ValueError("Script must be a Python script with a .py extension")
+
+    if not script_name.endswith(".py"):
+        script_name += ".py"
+
     if not os.path.exists(script_name):
         raise FileNotFoundError(f"Script '{script_name}' does not exist.")
 
     # Determine the Python executable to use
     python_executable = "python"
-    if not shutil.which("python"):  # Check if `python` exists
+    if not shutil.which("python"):
         python_executable = "python3"
 
     # Build the command
