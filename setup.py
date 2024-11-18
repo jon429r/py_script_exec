@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="py_script_exec",
-    version="1.1.0",
+    version="1.2.0",
     description="A cross-platform Python script runner.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
